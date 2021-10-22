@@ -1,14 +1,16 @@
 console.log("Dictionary App");
-var str = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-let btnsubmit = document.getElementById("btnsubmit").addEventListener('click',DisplayMeaning);
+
+let btnsubmit = document.getElementById("btnsubmit").addEventListener('click',DisplayMeaning);  //submit btn variable
+
+//function to display the meaning of word.
 function DisplayMeaning(e){
     console.log("meaning : ");
     e.preventDefault()
-
-    str += document.getElementById("inputWord").value;
+    var str = "https://api.dictionaryapi.dev/api/v2/entries/en/";  //url request to fetch api
+    str += document.getElementById("inputWord").value;  //url request to fetch api;
     console.log(str);
-    
-    const xhr = new XMLHttpRequest();
+    //a constant use to call api, the below used object-fields lie under ajax
+    const xhr = new XMLHttpRequest();    
     
     xhr.open('GET',str,true);
 
@@ -17,7 +19,6 @@ function DisplayMeaning(e){
             let obj = JSON.parse(this.responseText);
             console.log(obj); 
             let list = document.getElementById("display");
-            let audio = document.getElementById("aud1");
             s = "";
             for(key in obj){
                 for(l in obj[key].meanings){
@@ -44,8 +45,10 @@ function DisplayMeaning(e){
             }
             list.innerHTML = s;
         }
-        else
+        else{
             console.log("Sorry the word you are looking for not found");
+            document.getElementById("display").innerHTML = "<b>Sorry the word you are looking for not found</b>";
+        }
     }
     xhr.send();
     str = "https://api.dictionaryapi.dev/api/v2/entries/en/";
